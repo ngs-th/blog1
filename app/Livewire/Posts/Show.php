@@ -101,6 +101,7 @@ class Show extends Component
      */
     public function render(): View
     {
-        return view('livewire.posts.show');
+        return view('livewire.posts.show')
+            ->layout('components.layouts.guest');
     }
 }

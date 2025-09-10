@@ -1,4 +1,4 @@
-<flux:main container class="max-w-4xl">
+<div class="container max-w-4xl mx-auto px-4 overflow-hidden">
     <nav class="mb-6" aria-label="Breadcrumb">
         <flux:button 
             variant="ghost" 
@@ -18,22 +18,22 @@
                         {{ $post->title }}
                     </flux:heading>
                     
-                    <div class="flex items-center gap-4 mb-4">
-                        <flux:badge variant="outline">
+                    <div class="flex flex-wrap items-center gap-2 sm:gap-4 mb-4">
+                        <flux:badge variant="outline" class="flex-shrink-0">
                             <flux:icon name="user" class="w-4 h-4 mr-2" />
                             {{ $post->user->name }}
                         </flux:badge>
-                        <flux:badge variant="subtle">
+                        <flux:badge variant="subtle" class="flex-shrink-0">
                             <flux:icon name="calendar" class="w-4 h-4 mr-2" />
                             {{ $post->published_at->format('F j, Y') }}
                         </flux:badge>
-                        <flux:badge variant="subtle">
+                        <flux:badge variant="subtle" class="flex-shrink-0">
                             <flux:icon name="clock" class="w-4 h-4 mr-2" />
                             {{ $post->published_at->diffForHumans() }}
                         </flux:badge>
                     </div>
                     
-                    <div class="flex gap-2" role="toolbar" aria-label="Post actions">
+                    <div class="flex flex-wrap gap-2" role="toolbar" aria-label="Post actions">
                          @php
                              $isLiked = $this->isPostLiked($post->id) ?? false;
                              $isBookmarked = $this->isPostBookmarked($post->id) ?? false;
@@ -77,30 +77,21 @@
                     role="main"
                     aria-label="Article content"
                 >
-                    <div class="text-gray-800 leading-relaxed">
+                    <div class="text-zinc-800 dark:text-zinc-200 leading-relaxed">
                         {!! nl2br(e($post->content)) !!}
                     </div>
                 </div>
             </article>
 
             <footer class="mt-12 pt-8 border-t border-zinc-200 dark:border-zinc-700">
-                <div class="flex justify-between items-center">
-                    <flux:button 
-                        variant="ghost" 
-                        icon="arrow-left" 
-                        onclick="window.location.href='{{ route('home') }}'"
-                        aria-label="Go back to all posts"
-                    >
-                        Back to all posts
-                    </flux:button>
-                    
-                    <div class="flex items-center gap-4">
+                <div class="flex flex-col gap-4">
+                    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 sm:gap-4">
                         <flux:text size="sm" class="text-zinc-500">
                             <time datetime="{{ $post->published_at->toISOString() }}">
                                 Published {{ $post->published_at->diffForHumans() }}
                             </time>
                         </flux:text>
-                        <div class="flex gap-2" role="toolbar" aria-label="Post actions">
+                        <div class="flex flex-wrap gap-2" role="toolbar" aria-label="Post actions">
                              <flux:button 
                                  variant="ghost" 
                                  size="sm" 
@@ -130,11 +121,23 @@
                              />
                          </div>
                     </div>
+                    
                 </div>
             </footer>
         </div>
     </flux:card>
-</flux:main>
+    
+    <div class="mt-6">
+        <flux:button 
+            variant="ghost" 
+            icon="arrow-left" 
+            onclick="window.location.href='{{ route('home') }}'"
+            aria-label="Go back to all posts"
+        >
+            Back to all posts
+        </flux:button>
+    </div>
+</div>
 
 <script>
     // Handle post action events
