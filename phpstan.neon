@@ -1,0 +1,12 @@
+includes:
+    - vendor/larastan/larastan/extension.neon
+
+parameters:
+    paths:
+        - app/
+
+    # Level of rule strictness
+    level: 5
+
+    excludePaths:
+        - ./*/*/FileToBeExcluded.php
