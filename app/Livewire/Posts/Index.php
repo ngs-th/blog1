@@ -132,6 +132,7 @@ class Index extends Component
         // Get cached authors for filter dropdown
         $authors = Post::getCachedAuthors();
 
-        return view('livewire.posts.index', compact('posts', 'authors'));
+        return view('livewire.posts.index', compact('posts', 'authors'))
+            ->layout('components.layouts.guest');
     }
 }

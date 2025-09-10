@@ -14,71 +14,152 @@
 
 ## Layout Patterns
 
-### Admin Dashboard Layout
+### 🏗️ Sidebar + Main Content Layout (Recommended)
+
+**ALWAYS use this pattern for admin pages and authenticated content:**
+
 ```blade
-<!-- Standard Admin Page Structure -->
-<div class="min-h-screen bg-gray-50">
-    <!-- Navigation -->
-    <flux:navbar class="border-b bg-white">
-        <flux:navbar.brand href="{{ route('dashboard') }}">
-            <flux:icon name="newspaper" class="w-6 h-6" />
-            Blog Admin
-        </flux:navbar.brand>
-        
-        <flux:navbar.group>
-            <flux:navbar.item href="{{ route('dashboard') }}" :current="request()->routeIs('dashboard')">
-                Dashboard
-            </flux:navbar.item>
-            <flux:navbar.item href="{{ route('admin.posts.index') }}" :current="request()->routeIs('admin.posts.*')">
-                Posts
-            </flux:navbar.item>
-            <flux:navbar.item href="{{ route('admin.users.index') }}" :current="request()->routeIs('admin.users.*')">
-                Users
-            </flux:navbar.item>
-        </flux:navbar.group>
-        
-        <flux:navbar.group>
-            <flux:dropdown>
-                <flux:avatar :src="auth()->user()->avatar" :name="auth()->user()->name" />
-                <flux:menu>
-                    <flux:menu.item href="{{ route('profile.edit') }}">Profile</flux:menu.item>
-                    <flux:menu.separator />
-                    <flux:menu.item wire:click="logout">Logout</flux:menu.item>
-                </flux:menu>
-            </flux:dropdown>
-        </flux:navbar.group>
-    </flux:navbar>
-    
-    <!-- Main Content -->
-    <main class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-        <!-- Page Header -->
-        <div class="mb-8">
-            <flux:breadcrumbs class="mb-4">
-                <flux:breadcrumbs.item href="{{ route('dashboard') }}">Dashboard</flux:breadcrumbs.item>
-                @yield('breadcrumbs')
-            </flux:breadcrumbs>
-            
-            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+<!-- ✅ CORRECT: Use the app layout wrapper -->
+<x-layouts.app :title="__('Page Title')">
+    <!-- Page content goes here -->
+    <div class="space-y-6">
+        <!-- Page header -->
+        <div class="border-b border-zinc-200 bg-white px-6 py-4 dark:border-zinc-700 dark:bg-zinc-900">
+            <div class="flex items-center justify-between">
                 <div>
-                    <flux:heading size="2xl" class="mb-2">@yield('page-title')</flux:heading>
-                    <flux:text variant="muted">@yield('page-description')</flux:text>
+                    <flux:heading size="xl">Page Title</flux:heading>
+                    <flux:subheading>Page description</flux:subheading>
                 </div>
-                <div class="mt-4 sm:mt-0">
-                    @yield('page-actions')
+                <div class="flex items-center space-x-3">
+                    <!-- Action buttons -->
+                    <flux:button variant="primary" href="{{ route('create') }}">Add New</flux:button>
                 </div>
             </div>
         </div>
         
-        <!-- Page Content -->
-        @yield('content')
-    </main>
+        <!-- Main content -->
+        <div class="min-h-screen bg-zinc-50 px-6 py-4 dark:bg-zinc-800">
+            <!-- Your content here -->
+        </div>
+    </div>
+</x-layouts.app>
+```
+
+### 🚫 What NOT to Use
+
+```blade
+<!-- ❌ WRONG: Don't use flux:main container directly in Livewire components -->
+<flux:main container>
+    <!-- This breaks the layout structure -->
+</flux:main>
+
+<!-- ❌ WRONG: Don't create custom div layouts without the app wrapper -->
+<div class="min-h-screen">
+    <!-- Missing sidebar integration -->
 </div>
 ```
 
-### Two-Column Layout
+### 📐 Layout Structure Rules
+
+1. **Always use `<x-layouts.app>` wrapper** for authenticated pages
+2. **Never use `<flux:main>` directly** in Livewire components - it's handled by the layout
+3. **Use proper page structure** with header and content sections
+4. **Ensure responsive design** with proper spacing and backgrounds
+
+### 🎨 Public Pages Layout
+
+**For public-facing pages (blog posts, home page):**
+
 ```blade
-<!-- Content + Sidebar Layout -->
-<flux:container size="2xl" class="py-8">
+<!-- ✅ CORRECT: Custom layout for public pages -->
+<div class="min-h-screen bg-white dark:bg-zinc-800">
+    <!-- Page header -->
+    <div class="border-b border-zinc-200 bg-white px-6 py-8 text-center dark:border-zinc-700 dark:bg-zinc-900">
+        <flux:heading size="2xl" class="mb-2">Blog Title</flux:heading>
+        <flux:subheading>Welcome to our blog</flux:subheading>
+    </div>
+    
+    <!-- Main content -->
+    <div class="min-h-screen bg-zinc-50 px-6 py-8 dark:bg-zinc-800">
+        <!-- Content here -->
+    </div>
+</div>
+```
+
+### 🔧 Sidebar Component Structure
+
+**The sidebar is automatically included when using `<x-layouts.app>`:**
+
+```blade
+<!-- This is handled automatically by the layout -->
+<flux:sidebar sticky stashable class="border-e border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
+    <!-- Logo -->
+    <a href="{{ route('dashboard') }}" wire:navigate>
+        <x-app-logo />
+    </a>
+    
+    <!-- Navigation -->
+    <flux:navlist variant="outline">
+        <flux:navlist.group :heading="__('Platform')">
+            <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>
+                {{ __('Dashboard') }}
+            </flux:navlist.item>
+            <flux:navlist.item icon="document-text" :href="route('admin.posts.index')" :current="request()->routeIs('admin.posts.*')" wire:navigate>
+                {{ __('Posts') }}
+            </flux:navlist.item>
+        </flux:navlist.group>
+    </flux:navlist>
+    
+    <!-- User menu and theme toggle are included automatically -->
+</flux:sidebar>
+```
+
+### 📱 Responsive Behavior
+
+- **Desktop**: Sidebar is always visible and sticky
+- **Mobile**: Sidebar is collapsible with toggle button
+- **Stashable**: Sidebar can be minimized on desktop
+
+### 🎛️ Settings Layout Pattern
+
+**For settings pages with sub-navigation:**
+
+```blade
+<x-layouts.app :title="__('Settings')">
+    <div class="flex items-start max-md:flex-col">
+        <!-- Settings Navigation -->
+        <div class="me-10 w-full pb-4 md:w-[220px]">
+            <flux:navlist>
+                <flux:navlist.item :href="route('settings.profile')" wire:navigate>
+                    {{ __('Profile') }}
+                </flux:navlist.item>
+                <flux:navlist.item :href="route('settings.password')" wire:navigate>
+                    {{ __('Password') }}
+                </flux:navlist.item>
+            </flux:navlist>
+        </div>
+        
+        <flux:separator class="md:hidden" />
+        
+        <!-- Settings Content -->
+        <div class="flex-1 self-stretch max-md:pt-6">
+            <flux:heading>{{ $heading ?? '' }}</flux:heading>
+            <flux:subheading>{{ $subheading ?? '' }}</flux:subheading>
+            
+            <div class="mt-5 w-full max-w-lg">
+                <!-- Settings form content -->
+            </div>
+        </div>
+    </div>
+</x-layouts.app>
+```
+
+### 📊 Two-Column Content Layout
+
+**For content with sidebar within main area:**
+
+```blade
+<x-layouts.app :title="__('Content')">
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <!-- Main Content -->
         <div class="lg:col-span-2">
@@ -92,36 +173,61 @@
             </flux:card>
         </div>
         
-        <!-- Sidebar -->
+        <!-- Content Sidebar -->
         <div class="space-y-6">
             <flux:card>
                 <flux:card.header>
                     <flux:heading size="md">Quick Actions</flux:heading>
                 </flux:card.header>
-                <flux:card.body class="space-y-3">
-                    <flux:button class="w-full" variant="primary">
-                        New Post
-                    </flux:button>
-                    <flux:button class="w-full" variant="outline">
-                        Import Posts
-                    </flux:button>
-                </flux:card.body>
-            </flux:card>
-            
-            <flux:card>
-                <flux:card.header>
-                    <flux:heading size="md">Recent Activity</flux:heading>
-                </flux:card.header>
                 <flux:card.body>
-                    <!-- Activity list -->
+                    <!-- Sidebar content -->
                 </flux:card.body>
             </flux:card>
         </div>
     </div>
-</flux:container>
+</x-layouts.app>
 ```
 
-### Grid Layout
+### ⚡ Layout Implementation Checklist
+
+**Before implementing any layout, ensure:**
+
+- [ ] ✅ Using `<x-layouts.app>` for authenticated pages
+- [ ] ✅ Using custom div structure for public pages
+- [ ] ✅ Never using `<flux:main>` directly in components
+- [ ] ✅ Proper page header with title and actions
+- [ ] ✅ Consistent spacing and background colors
+- [ ] ✅ Responsive design considerations
+- [ ] ✅ Dark mode support with proper classes
+
+### 🚨 Common Layout Mistakes
+
+1. **❌ Using `<flux:main container>` in Livewire components**
+   - This breaks the sidebar layout structure
+   - The layout wrapper handles this automatically
+
+2. **❌ Missing proper page structure**
+   - Always include page header and content sections
+   - Use consistent spacing and backgrounds
+
+3. **❌ Inconsistent responsive behavior**
+   - Test on mobile devices
+   - Ensure sidebar collapses properly
+
+4. **❌ Missing dark mode support**
+   - Always include `dark:` variants for colors
+   - Test in both light and dark themes
+
+### 🎯 Layout Best Practices
+
+1. **Consistency**: Use the same layout patterns across similar pages
+2. **Accessibility**: Ensure proper navigation and focus management
+3. **Performance**: Minimize layout shifts and optimize for mobile
+4. **Maintainability**: Keep layout logic in components, not in individual pages
+
+---
+
+## Grid Layout
 ```blade
 <!-- Responsive Card Grid -->
 <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">

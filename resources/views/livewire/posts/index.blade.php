@@ -1,14 +1,20 @@
-<flux:main container>
-    <div class="mb-8">
-        <flux:heading size="2xl" class="text-center mb-2">My Personal Blog</flux:heading>
-        <flux:subheading class="text-center">Discover insights, tutorials, and thoughts</flux:subheading>
+<div>
+    <!-- Page Header -->
+    <div class="px-8 py-8 border-b border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800">
+        <div class="text-center">
+            <flux:heading size="2xl" class="text-zinc-900 dark:text-zinc-100 font-bold mb-2">My Personal Blog</flux:heading>
+            <flux:subheading class="text-zinc-600 dark:text-zinc-400">Discover insights, tutorials, and thoughts</flux:subheading>
+        </div>
     </div>
+
+    <!-- Main Content -->
+    <div class="px-8 py-8 bg-zinc-50 dark:bg-zinc-900 min-h-screen">
     
     <!-- Search and Filters -->
-    <div class="mb-8" role="search" aria-label="Search and filter posts">
-        <div class="flex flex-col md:flex-row gap-4 items-center justify-between">
+    <div class="mb-12" role="search" aria-label="Search and filter posts">
+        <div class="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
             <!-- Search Input -->
-            <div class="flex-1 max-w-md">
+            <div class="w-full sm:flex-1 sm:max-w-md">
                 <flux:input 
                     wire:model.live.debounce.300ms="search"
                     placeholder="Search posts..."
@@ -19,12 +25,12 @@
             </div>
             
             <!-- Filter Toggle and Sort -->
-            <div class="flex gap-2">
+            <div class="flex flex-col xs:flex-row gap-2 w-full sm:w-auto">
                 <flux:button 
                     variant="outline" 
                     icon="funnel" 
                     wire:click="$toggle('showFilters')"
-                    class="{{ $showFilters ? 'bg-blue-50 border-blue-200' : '' }}"
+                    class="{{ $showFilters ? 'bg-blue-50 border-blue-200 dark:bg-blue-900/20 dark:border-blue-700' : '' }} w-full xs:w-auto"
                     aria-expanded="{{ $showFilters ? 'true' : 'false' }}"
                     aria-controls="filter-panel"
                     aria-label="{{ $showFilters ? 'Hide filters' : 'Show filters' }}"
@@ -34,7 +40,7 @@
                 
                 <flux:select 
                     wire:model.live="sortBy" 
-                    class="min-w-32"
+                    class="w-full xs:min-w-32"
                     aria-label="Sort posts by"
                 >
                     <option value="latest">Latest</option>
@@ -48,19 +54,20 @@
         @if($showFilters)
             <div 
                 id="filter-panel"
-                class="mt-4 p-4 bg-zinc-50 dark:bg-zinc-800 rounded-lg border"
+                class="mt-6 p-4 sm:p-6 bg-zinc-50 dark:bg-zinc-800 rounded-lg border border-zinc-200 dark:border-zinc-700 mb-4"
                 role="region"
                 aria-label="Filter options"
             >
-                <div class="flex flex-col md:flex-row gap-4">
+                <div class="flex flex-col sm:flex-row gap-4 sm:gap-6">
                     <div class="flex-1">
                         <flux:field>
-                            <flux:label for="author-filter">Author</flux:label>
+                            <flux:label for="author-filter" class="text-sm font-medium text-zinc-700 dark:text-zinc-300">Author</flux:label>
                             <flux:select 
                                 id="author-filter"
                                 wire:model.live="authorFilter" 
                                 placeholder="All authors"
                                 aria-label="Filter posts by author"
+                                class="w-full mt-1"
                             >
                                 <option value="">All authors</option>
                                 @foreach($authors as $author)
@@ -76,6 +83,7 @@
                             wire:click="clearFilters"
                             icon="x-mark"
                             aria-label="Clear all filters"
+                            class="w-full sm:w-auto"
                         >
                             Clear
                         </flux:button>
@@ -132,7 +140,7 @@
     <!-- Loading State -->
     <div 
         wire:loading.delay 
-        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+        class="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
         role="status"
         aria-label="Loading posts"
         aria-live="polite"
@@ -143,7 +151,7 @@
     <!-- Posts Grid -->
     <div 
         wire:loading.remove.delay 
-        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+        class="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
         role="main"
         aria-label="Blog posts"
         aria-live="polite"
@@ -175,10 +183,9 @@
         @endforelse
     </div>
 
-    <div class="mt-8">
+    <div class="mt-16">
         {{ $posts->links() }}
     </div>
-</flux:main>
 
 <script>
     // Handle post action events
@@ -235,3 +242,5 @@
         }, 3000);
     }
 </script>
+    </div>
+</div>
