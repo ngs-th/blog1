@@ -11,7 +11,7 @@
     <div class="px-8 py-8 bg-zinc-50 dark:bg-zinc-900 min-h-screen">
     
     <!-- Search and Filters -->
-    <div class="mb-12" role="search" aria-label="Search and filter posts">
+    <div class="mb-8" role="search" aria-label="Search and filter posts">
         <div class="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
             <!-- Search Input -->
             <div class="w-full sm:flex-1 sm:max-w-md">
@@ -24,8 +24,8 @@
                 />
             </div>
             
-            <!-- Filter Toggle and Sort -->
-            <div class="flex flex-col xs:flex-row gap-2 w-full sm:w-auto">
+            <!-- Filter Toggle -->
+            <div class="flex w-full sm:w-auto">
                 <flux:button 
                     variant="outline" 
                     icon="funnel" 
@@ -37,16 +37,6 @@
                 >
                     Filters
                 </flux:button>
-                
-                <flux:select 
-                    wire:model.live="sortBy" 
-                    class="w-full xs:min-w-32"
-                    aria-label="Sort posts by"
-                >
-                    <option value="latest">Latest</option>
-                    <option value="oldest">Oldest</option>
-                    <option value="title">Title A-Z</option>
-                </flux:select>
             </div>
         </div>
         
@@ -73,6 +63,22 @@
                                 @foreach($authors as $author)
                                     <option value="{{ $author }}">{{ $author }}</option>
                                 @endforeach
+                            </flux:select>
+                        </flux:field>
+                    </div>
+                    
+                    <div class="flex-1">
+                        <flux:field>
+                            <flux:label for="sort-filter" class="text-sm font-medium text-zinc-700 dark:text-zinc-300">Sorting</flux:label>
+                            <flux:select 
+                                id="sort-filter"
+                                wire:model.live="sortBy" 
+                                aria-label="Sort posts by"
+                                class="w-full mt-1"
+                            >
+                                <option value="latest">Latest</option>
+                                <option value="oldest">Oldest</option>
+                                <option value="title">Title A-Z</option>
                             </flux:select>
                         </flux:field>
                     </div>
@@ -183,7 +189,7 @@
         @endforelse
     </div>
 
-    <div class="mt-16">
+    <div class="mt-8">
         {{ $posts->links() }}
     </div>
 
