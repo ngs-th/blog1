@@ -11,6 +11,10 @@
 <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
 
 <script>
+// Initialize Flux appearance system early
+window.$flux = window.$flux || {};
+window.$flux.appearance = window.$flux.appearance || 'system';
+
 // Global error handler for NotSupportedError
 window.addEventListener('error', function(e) {
     if (e.error && e.error.name === 'NotSupportedError' && e.error.message.includes('attributes')) {
