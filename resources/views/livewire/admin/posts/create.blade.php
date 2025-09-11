@@ -14,10 +14,10 @@
         
         <div class="flex items-center justify-between">
             <div>
-                <flux:heading size="xl" class="mb-2 text-gray-900">
+                <flux:heading size="xl" class="mb-2">
                     Create New Post
                 </flux:heading>
-                <flux:subheading class="text-gray-600">
+                <flux:subheading>
                     Write and publish your new blog article
                 </flux:subheading>
             </div>
@@ -156,7 +156,7 @@
                                 class="w-full sm:w-auto"
                                 :disabled="$saving || $autoSaving"
                             >
-                                <span wire:loading.remove wire:target="saveDraft">
+                                <span wire:loading.remove wire:target="saveDraft" class="flex items-center">
                                     <flux:icon.document class="w-4 h-4 mr-1" />
                                     Save as Draft
                                 </span>
@@ -174,7 +174,7 @@
                             class="w-full sm:w-auto"
                             :disabled="$saving || $autoSaving"
                         >
-                            <span wire:loading.remove wire:target="save">
+                            <span wire:loading.remove wire:target="save" class="flex items-center">
                                 <flux:icon.check class="w-4 h-4 mr-1" />
                                 Publish Post
                             </span>

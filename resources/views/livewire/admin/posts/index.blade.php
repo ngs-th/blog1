@@ -43,9 +43,7 @@
                 </div>
             </div>
 
-            <div class="flex items-center gap-2">
-                <flux:button variant="primary" icon="plus" :href="route('admin.posts.create')">New Post</flux:button>
-            </div>
+
         </div>
     </div>
 
@@ -54,34 +52,25 @@
         <div class="flex gap-6">
             <div class="relative flex-1 rounded-lg px-6 py-4 bg-zinc-50 dark:bg-zinc-700">
                 <flux:subheading>Total Posts</flux:subheading>
-                <flux:heading size="xl" class="mb-2">{{ $posts->total() }}</flux:heading>
+                <flux:heading size="xl" class="mb-2">{{ $totalPosts }}</flux:heading>
                 <div class="flex items-center gap-1 font-medium text-sm text-blue-600 dark:text-blue-400">
                     <flux:icon icon="document-text" variant="micro" /> All content
-                </div>
-                <div class="absolute top-0 right-0 pr-2 pt-2">
-                    <flux:button icon="ellipsis-horizontal" variant="subtle" size="sm" />
                 </div>
             </div>
 
             <div class="relative flex-1 rounded-lg px-6 py-4 bg-zinc-50 dark:bg-zinc-700 max-md:hidden">
                 <flux:subheading>Published</flux:subheading>
-                <flux:heading size="xl" class="mb-2">{{ $posts->where('published_at', '!=', null)->count() }}</flux:heading>
+                <flux:heading size="xl" class="mb-2">{{ $publishedPosts }}</flux:heading>
                 <div class="flex items-center gap-1 font-medium text-sm text-green-600 dark:text-green-400">
                     <flux:icon icon="arrow-trending-up" variant="micro" /> Live posts
-                </div>
-                <div class="absolute top-0 right-0 pr-2 pt-2">
-                    <flux:button icon="ellipsis-horizontal" variant="subtle" size="sm" />
                 </div>
             </div>
 
             <div class="relative flex-1 rounded-lg px-6 py-4 bg-zinc-50 dark:bg-zinc-700 max-lg:hidden">
                 <flux:subheading>Drafts</flux:subheading>
-                <flux:heading size="xl" class="mb-2">{{ $posts->where('published_at', null)->count() }}</flux:heading>
+                <flux:heading size="xl" class="mb-2">{{ $draftPosts }}</flux:heading>
                 <div class="flex items-center gap-1 font-medium text-sm text-yellow-600 dark:text-yellow-400">
                     <flux:icon icon="clock" variant="micro" /> In progress
-                </div>
-                <div class="absolute top-0 right-0 pr-2 pt-2">
-                    <flux:button icon="ellipsis-horizontal" variant="subtle" size="sm" />
                 </div>
             </div>
         </div>

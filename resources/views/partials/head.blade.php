@@ -52,7 +52,6 @@ window.addEventListener('error', function(e) {
 })();
 </script>
 
-@fluxScripts
 <script>
 // Safari/Electron compatibility fixes
 (function() {
