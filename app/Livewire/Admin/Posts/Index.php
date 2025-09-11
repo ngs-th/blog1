@@ -13,10 +13,15 @@ class Index extends Component
     use WithPagination;
 
     public string $dateFilter = '30';
+
     public bool $selectAll = false;
+
     public array $selectedPosts = [];
+
     public bool $showStatusFilter = false;
+
     public bool $showAuthorFilter = false;
+
     public bool $showMoreFilters = false;
 
     /**
@@ -64,7 +69,7 @@ class Index extends Component
 
         foreach ($posts as $post) {
             $this->authorize('update', $post);
-            if (!$post->published_at) {
+            if (! $post->published_at) {
                 $post->update(['published_at' => now()]);
             }
         }
@@ -127,7 +132,7 @@ class Index extends Component
      */
     public function toggleStatusFilter(): void
     {
-        $this->showStatusFilter = !$this->showStatusFilter;
+        $this->showStatusFilter = ! $this->showStatusFilter;
     }
 
     /**
@@ -135,7 +140,7 @@ class Index extends Component
      */
     public function toggleAuthorFilter(): void
     {
-        $this->showAuthorFilter = !$this->showAuthorFilter;
+        $this->showAuthorFilter = ! $this->showAuthorFilter;
     }
 
     /**
@@ -143,7 +148,7 @@ class Index extends Component
      */
     public function toggleMoreFilters(): void
     {
-        $this->showMoreFilters = !$this->showMoreFilters;
+        $this->showMoreFilters = ! $this->showMoreFilters;
     }
 
     /**
@@ -188,11 +193,11 @@ class Index extends Component
     public function render(): View
     {
         $posts = $this->getPosts()->paginate(10);
-        
+
         // Get statistics for all user posts (not filtered by date)
         $user = Auth::user();
         $allUserPosts = Post::where('user_id', $user->getAuthIdentifier());
-        
+
         $totalPosts = $allUserPosts->count();
         $publishedPosts = $allUserPosts->whereNotNull('published_at')->count();
         $draftPosts = $allUserPosts->whereNull('published_at')->count();

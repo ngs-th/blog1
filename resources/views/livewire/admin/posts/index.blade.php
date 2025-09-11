@@ -9,8 +9,8 @@
     <div class="px-8 py-8 border-b border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800">
         <div class="flex items-center justify-between">
             <div>
-                <flux:heading size="xl" class="text-zinc-900 dark:text-zinc-100 font-bold">Your Posts</flux:heading>
-                <flux:subheading class="text-zinc-600 dark:text-zinc-400 mt-2">Manage and organize your blog content</flux:subheading>
+                <flux:heading size="xl" class="font-bold">Your Posts</flux:heading>
+                <flux:subheading class="mt-2">Manage and organize your blog content</flux:subheading>
             </div>
             <flux:button :href="route('admin.posts.create')" variant="primary" icon="plus">
                 Add New Post
@@ -38,7 +38,7 @@
                     <flux:subheading class="whitespace-nowrap">Filter by:</flux:subheading>
 
                     <flux:badge as="button" variant="pill" color="zinc" icon="plus" size="lg" wire:click="toggleStatusFilter">Status</flux:badge>
-                    <flux:badge as="button" variant="pill" color="zinc" icon="plus" size="lg" class="max-md:hidden" wire:click="toggleAuthorFilter">Author</flux:badge>
+                    <flux:badge as="button" variant="pill" color="zinc" icon="plus" size="lg" wire:click="toggleAuthorFilter">Author</flux:badge>
                     <flux:badge as="button" variant="pill" color="zinc" icon="plus" size="lg" wire:click="toggleMoreFilters">More filters...</flux:badge>
                 </div>
             </div>
@@ -47,36 +47,35 @@
         </div>
     </div>
 
-    <div class="space-y-24 px-8 py-8">
+    <div class="space-y-8 px-8 py-8">
         <!-- Statistics Cards -->
-        <div class="flex gap-6">
-            <div class="relative flex-1 rounded-lg px-6 py-4 bg-zinc-50 dark:bg-zinc-700">
+        <div class="flex flex-col md:flex-row gap-6 text-right">
+            <div class="relative flex-1 rounded-lg px-6 py-4 bg-white dark:bg-zinc-800">
                 <flux:subheading>Total Posts</flux:subheading>
                 <flux:heading size="xl" class="mb-2">{{ $totalPosts }}</flux:heading>
-                <div class="flex items-center gap-1 font-medium text-sm text-blue-600 dark:text-blue-400">
+                <div class="flex items-center justify-end gap-1 font-medium text-sm">
                     <flux:icon icon="document-text" variant="micro" /> All content
                 </div>
             </div>
 
-            <div class="relative flex-1 rounded-lg px-6 py-4 bg-zinc-50 dark:bg-zinc-700 max-md:hidden">
+            <div class="relative flex-1 rounded-lg px-6 py-4 bg-white dark:bg-zinc-800">
                 <flux:subheading>Published</flux:subheading>
                 <flux:heading size="xl" class="mb-2">{{ $publishedPosts }}</flux:heading>
-                <div class="flex items-center gap-1 font-medium text-sm text-green-600 dark:text-green-400">
+                <div class="flex items-center justify-end gap-1 font-medium text-sm">
                     <flux:icon icon="arrow-trending-up" variant="micro" /> Live posts
                 </div>
             </div>
 
-            <div class="relative flex-1 rounded-lg px-6 py-4 bg-zinc-50 dark:bg-zinc-700 max-lg:hidden">
+            <div class="relative flex-1 rounded-lg px-6 py-4 bg-white dark:bg-zinc-800">
                 <flux:subheading>Drafts</flux:subheading>
                 <flux:heading size="xl" class="mb-2">{{ $draftPosts }}</flux:heading>
-                <div class="flex items-center gap-1 font-medium text-sm text-yellow-600 dark:text-yellow-400">
+                <div class="flex items-center justify-end gap-1 font-medium text-sm">
                     <flux:icon icon="clock" variant="micro" /> In progress
                 </div>
             </div>
         </div>
 
-        <!-- Separator Line -->
-        <div class="border-t border-zinc-200 dark:border-zinc-700"></div>
+
 
         @if(count($selectedPosts ?? []) > 0)
             <div class="mb-4 p-4 bg-zinc-50 dark:bg-zinc-800 rounded-lg border">
@@ -106,7 +105,7 @@
                     <flux:checkbox wire:model.live="selectAll" />
                 </flux:table.column>
                 <flux:table.column class="max-md:hidden">ID</flux:table.column>
-                <flux:table.column><span class="max-md:hidden">Title</span><div class="md:hidden w-6"></div></flux:table.column>
+                <flux:table.column>Title</flux:table.column>
                 <flux:table.column class="max-md:hidden">Status</flux:table.column>
                 <flux:table.column class="max-lg:hidden">Published At</flux:table.column>
                 <flux:table.column class="max-md:hidden">Author</flux:table.column>
@@ -121,7 +120,7 @@
                         <flux:table.cell class="min-w-6">
                             <div class="space-y-1">
                                 <div class="font-medium">{{ $post->title }}</div>
-                                <div class="text-sm text-zinc-600 dark:text-zinc-400 max-md:hidden">
+                                <div class="text-sm max-md:hidden">
                                     {{ Str::limit(strip_tags($post->content), 60) }}
                                 </div>
                             </div>
