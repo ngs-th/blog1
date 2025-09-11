@@ -4,7 +4,6 @@ namespace App\Livewire\Admin\Posts;
 
 use App\Models\Post;
 use Illuminate\Contracts\View\View;
-use Illuminate\Http\RedirectResponse;
 use Livewire\Component;
 
 class Edit extends Component
@@ -40,7 +39,7 @@ class Edit extends Component
     /**
      * Save the updated post
      */
-    public function save(): RedirectResponse
+    public function save(): void
     {
         $this->authorize('update', $this->post);
 
@@ -54,7 +53,15 @@ class Edit extends Component
 
         session()->flash('message', 'Post successfully updated.');
 
-        return redirect()->route('admin.posts.index');
+        $this->redirect(route('admin.posts.index'));
+    }
+
+    /**
+     * Update the post (alias for save method)
+     */
+    public function update(): void
+    {
+        $this->save();
     }
 
     /**
