@@ -189,9 +189,11 @@
         @endforelse
     </div>
 
-    <div class="mt-8">
-        {{ $posts->links() }}
-    </div>
+    @if($posts->hasPages())
+        <div class="mt-8">
+            <flux:pagination :paginator="$posts" />
+        </div>
+    @endif
 
 <script>
     // Handle post action events
