@@ -44,7 +44,7 @@
                              size="sm" 
                              icon="heart"
                              wire:click="likePost({{ $post->id }})"
-                             class="{{ $isLiked ? 'text-red-500 border-red-500 hover:bg-red-50' : 'hover:text-red-500 hover:border-red-500' }} transition-colors"
+                             class="{{ $isLiked ? 'text-red-500 border-red-500 hover:bg-red-50 dark:hover:bg-red-950/20' : 'hover:text-red-500 dark:hover:text-red-400 hover:border-red-500 dark:hover:border-red-400' }} transition-colors"
                              aria-label="{{ $isLiked ? 'Unlike' : 'Like' }} this post"
                          >
                              {{ $isLiked ? 'Unlike' : 'Like' }}
@@ -54,7 +54,7 @@
                              size="sm" 
                              icon="bookmark"
                              wire:click="bookmarkPost({{ $post->id }})"
-                             class="{{ $isBookmarked ? 'text-blue-500 border-blue-500 hover:bg-blue-50' : 'hover:text-blue-500 hover:border-blue-500' }} transition-colors"
+                             class="{{ $isBookmarked ? 'text-blue-500 border-blue-500 hover:bg-blue-50 dark:hover:bg-blue-950/20' : 'hover:text-blue-500 dark:hover:text-blue-400 hover:border-blue-500 dark:hover:border-blue-400' }} transition-colors"
                              aria-label="{{ $isBookmarked ? 'Remove bookmark' : 'Bookmark' }} this post"
                          >
                              {{ $isBookmarked ? 'Bookmarked' : 'Bookmark' }}
@@ -64,7 +64,7 @@
                              size="sm" 
                              icon="share"
                              wire:click="sharePost({{ $post->id }})"
-                             class="hover:text-green-500 hover:border-green-500 transition-colors"
+                             class="hover:text-green-500 dark:hover:text-green-400 hover:border-green-500 dark:hover:border-green-400 transition-colors"
                              aria-label="Share this post"
                          >
                              Share
@@ -97,7 +97,7 @@
                                  size="sm" 
                                  icon="heart" 
                                  wire:click="likePost({{ $post->id }})"
-                                 class="{{ $isLiked ? 'text-red-500 hover:text-red-600' : 'hover:text-red-500' }} transition-colors"
+                                 class="{{ $isLiked ? 'text-red-500 hover:text-red-600 dark:hover:text-red-400' : 'hover:text-red-500 dark:hover:text-red-400' }} transition-colors"
                                  aria-label="{{ $isLiked ? 'Unlike' : 'Like' }} this post"
                                  title="{{ $isLiked ? 'Unlike' : 'Like' }} this post"
                              />
@@ -106,7 +106,7 @@
                                  size="sm" 
                                  icon="bookmark" 
                                  wire:click="bookmarkPost({{ $post->id }})"
-                                 class="{{ $isBookmarked ? 'text-blue-500 hover:text-blue-600' : 'hover:text-blue-500' }} transition-colors"
+                                 class="{{ $isBookmarked ? 'text-blue-500 hover:text-blue-600 dark:hover:text-blue-400' : 'hover:text-blue-500 dark:hover:text-blue-400' }} transition-colors"
                                  aria-label="{{ $isBookmarked ? 'Remove bookmark' : 'Bookmark' }} this post"
                                  title="{{ $isBookmarked ? 'Remove bookmark' : 'Bookmark' }} this post"
                              />
@@ -115,7 +115,7 @@
                                  size="sm" 
                                  icon="share" 
                                  wire:click="sharePost({{ $post->id }})"
-                                 class="hover:text-green-500 transition-colors"
+                                 class="hover:text-green-500 dark:hover:text-green-400 transition-colors"
                                  aria-label="Share this post"
                                  title="Share this post"
                              />

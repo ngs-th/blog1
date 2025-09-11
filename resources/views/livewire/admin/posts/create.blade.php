@@ -115,7 +115,8 @@
                         <flux:input 
                             type="datetime-local"
                             wire:model.live="published_at"
-                            :error="$errors->first('published_at')"
+                            placeholder="Select publication date and time"
+                            :invalid="$errors->has('published_at')"
                             class="mt-2"
                         />
                         <flux:error name="published_at" />

@@ -30,7 +30,7 @@
         
         <flux:heading 
             size="{{ $variant === 'featured' ? 'xl' : ($variant === 'compact' ? 'md' : 'lg') }}" 
-            class="mb-3 group-hover:text-blue-600 transition-colors"
+            class="mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors"
             id="post-title-{{ $post->id }}"
         >
             {{ $post->title }}
@@ -77,7 +77,7 @@
                         variant="ghost" 
                         size="sm" 
                         icon="heart" 
-                        class="opacity-0 group-hover:opacity-100 transition-opacity {{ $isLiked ? 'text-red-500 hover:text-red-600' : 'hover:text-red-500' }}"
+                        class="opacity-0 group-hover:opacity-100 transition-opacity {{ $isLiked ? 'text-red-500 hover:text-red-600 dark:hover:text-red-400' : 'hover:text-red-500 dark:hover:text-red-400' }}"
                         wire:click.stop="likePost({{ $post->id }})"
                         aria-label="{{ $isLiked ? 'Unlike' : 'Like' }} this post"
                         title="{{ $isLiked ? 'Unlike' : 'Like' }} this post"
@@ -86,7 +86,7 @@
                         variant="ghost" 
                         size="sm" 
                         icon="bookmark" 
-                        class="opacity-0 group-hover:opacity-100 transition-opacity {{ $isBookmarked ? 'text-blue-500 hover:text-blue-600' : 'hover:text-blue-500' }}"
+                        class="opacity-0 group-hover:opacity-100 transition-opacity {{ $isBookmarked ? 'text-blue-500 hover:text-blue-600 dark:hover:text-blue-400' : 'hover:text-blue-500 dark:hover:text-blue-400' }}"
                         wire:click.stop="bookmarkPost({{ $post->id }})"
                         aria-label="{{ $isBookmarked ? 'Remove bookmark' : 'Bookmark' }} this post"
                         title="{{ $isBookmarked ? 'Remove bookmark' : 'Bookmark' }} this post"
@@ -95,7 +95,7 @@
                         variant="ghost" 
                         size="sm" 
                         icon="share" 
-                        class="opacity-0 group-hover:opacity-100 transition-opacity hover:text-green-500"
+                        class="opacity-0 group-hover:opacity-100 transition-opacity hover:text-green-500 dark:hover:text-green-400"
                         wire:click.stop="sharePost({{ $post->id }})"
                         aria-label="Share this post"
                         title="Share this post"
